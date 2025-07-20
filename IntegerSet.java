@@ -1,69 +1,99 @@
 import java.util.ArrayList;
+
 /**
- * ADT thats store Integer min to max
+ * ADT ที่เก็บค่า Integerที่ไม่ซ่ำกัน
  */
 public class IntegerSet {
-    ArrayList<Integer> number;
+    ArrayList<Integer> numbers;
+    // ห้ามตัวเลขซ้ำกัน
+    // เลขจะเรียงจากน้อยไปมาก
+    // ห้ามเป็นnull
+    // AF(numbers) ค่าของ arr ที่มีค่าเป็น Integer
 
+    /**
+     * Constructor เริ่มต้น สร้างเซตว่าง
+     */
     public IntegerSet() {
-        number = new ArrayList<>();
+        numbers = new ArrayList<>();
         checkRep();
 
     }
 
+    /**
+     * ตรวจสอบว่า Rep Invariant เป็นจริงหรือไม่
+     */
     private void checkRep() {
-        if (number == null)
-            throw new RuntimeException("number");
-        if (number.size() > 1) {
-            for (int i = 0; i < number.size() - 1; i++) {
-                if (number.get(i) >= number.get(i + 1)) {
+        if (numbers == null)
+            throw new RuntimeException("numbers");
+        if (numbers.size() > 1) {
+            for (int i = 0; i < numbers.size() - 1; i++) {
+                if (numbers.get(i) >= numbers.get(i + 1)) {
                     throw new RuntimeException("error sort");
                 }
             }
         }
     }
-    public void add(Integer x){
-         if (!number.contains(x) && number != null  && x != null) {
-            if (number.size()==0) {
-                number.add(x);
+
+    /**
+     * เพื่มตัวเลขลงในset
+     * 
+     * @param x ค่าที่ต้องการจะเพื่ม
+     */
+    public void add(Integer x) {
+        if (!numbers.contains(x) && numbers != null && x != null) {
+            if (numbers.size() == 0) {
+                numbers.add(x);
             } else {
-               for(int i=0;i<number.size();i++){
-                if (x<number.get(0)) {
-                    number.add(0,x);
-                    break;
+                for (int i = 0; i < numbers.size(); i++) {
+                    if (x < numbers.get(0)) {
+                        numbers.add(0, x);
+                        break;
+                    }
+                    if (i == numbers.size() - 1) {
+                        numbers.add(x);
+                        break;
+                    }
+                    if (numbers.get(i) < x && x < numbers.get(i + 1)) {
+                        numbers.add(i + 1, x);
+                        break;
+                    }
                 }
-                if (i==number.size()-1) {
-                    number.add(x);
-                    break;
-                }
-                if (number.get(i)<x&&x<number.get(i+1)) {
-                    number.add(i+1,x);
-                    break;
-                }
-               }
             }
-         }
-         checkRep();
+        }
+        checkRep();
     }
-    public void remove(Integer x){
-        if (x!=null) {
-            number.remove(x);
+
+    /**
+     * ลบค่าในsetโดยอิงจากx
+     * 
+     * @param รับค่าที่ต้องจะลบ(x)
+     */
+    public void remove(Integer x) {
+        if (x != null) {
+            numbers.remove(x);
         }
     }
-    public boolean contains(Integer x){
-        return number.contains(x);
+
+    /**
+     * เช็คค่าในset
+     * 
+     * @param x ค่าที่ต้องการจะเช็คในset
+     * @return true ถ้ามีค่านั้น / false ถ้าไม่มี
+     */
+    public boolean contains(Integer x) {
+        return numbers.contains(x);
     }
-    public int size(){
-        return number.size();
+
+    /**
+     * หาขนาดของset
+     * 
+     * @return ขนาดของset
+     */
+    public int size() {
+        return numbers.size();
     }
-    public String toString(){
-        return number.toString();
-    } 
+
+    public String toString() {
+        return numbers.toString();
     }
-    
-
-
-
-
-
-
+}
