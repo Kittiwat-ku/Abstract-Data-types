@@ -5,6 +5,7 @@ import java.util.ArrayList;
  */
 public class IntegerSet {
     ArrayList<Integer> numbers;
+    // Rep Invariant (RI):
     // ห้ามตัวเลขซ้ำกัน
     // เลขจะเรียงจากน้อยไปมาก
     // ห้ามเป็นnull
